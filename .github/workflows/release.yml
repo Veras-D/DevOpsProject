@@ -1,0 +1,74 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      - name: Publish
+        run: dotnet publish --runtime linux-x64 --configuration Release -p:PublishSingleFile=true --self-contained true -o release/linux
+      - name: Archive Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tarot-app-linux
+          path: release/linux/*
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      - name: Publish
+        run: dotnet publish --runtime win-x64 --configuration Release -p:PublishSingleFile=true --self-contained true -o release/windows
+      - name: Archive Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tarot-app-windows
+          path: release/windows/*
+  create-release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create Linux ZIP
+        run: |
+          cd artifacts/tarot-app-linux
+          zip -r ../../TarotApp-Linux.zip .
+      - name: Create Windows ZIP
+        run: |
+          cd artifacts/tarot-app-windows
+          zip -r ../../TarotApp-Windows.zip .
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            TarotApp-Linux.zip
+            TarotApp-Windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

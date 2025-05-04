@@ -1,0 +1,44 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TarotApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+        x:Class="TarotApp.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Tarot Card Reader"
+        Background="#1E1E1E"
+        Foreground="White"
+        Width="400" Height="450">
+
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="15">
+        <TextBlock Text="Tarot Card Reader" 
+                   HorizontalAlignment="Center" 
+                   FontSize="24" 
+                   FontWeight="Bold"
+                   Foreground="White"
+                   Margin="0,0,0,15"/>
+        
+        <Image Source="{Binding CurrentCardImage}" 
+               Width="128" 
+               Height="256" 
+               Stretch="Uniform"/>
+        
+        <TextBlock Text="{Binding CardName}" 
+                   HorizontalAlignment="Center" 
+                   FontSize="18"
+                   Foreground="White"
+                   Margin="0,10,0,20"/>
+        
+        <Button Content="Draw Card" 
+                Command="{Binding DrawCard}" 
+                HorizontalAlignment="Center"
+                Padding="15,10"
+                Background="#3A3A3A"
+                Foreground="White"/>
+    </StackPanel>
+</Window>
