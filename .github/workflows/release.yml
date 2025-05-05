@@ -19,7 +19,7 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
       - name: Publish
-        run: dotnet publish --runtime linux-x64 --configuration Release -p:PublishSingleFile=true --self-contained true -o release/linux
+        run: dotnet publish TarotApp/TarotApp.csproj --runtime linux-x64 --configuration Release -p:PublishSingleFile=true -p:UseAppHost=true --self-contained true -o release/linux
       - name: Archive Linux artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -40,7 +40,7 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
       - name: Publish
-        run: dotnet publish --runtime win-x64 --configuration Release -p:PublishSingleFile=true --self-contained true -o release/windows
+        run: dotnet publish TarotApp/TarotApp.csproj --runtime win-x64 --configuration Release -p:PublishSingleFile=true -p:UseAppHost=true --self-contained true -o release/windows
       - name: Archive Windows artifacts
         uses: actions/upload-artifact@v4
         with:
