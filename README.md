@@ -1,3 +1,7 @@
+<div align="center"">
+  <img src="./TarotApp/public/icon.png" style="wight: 100px;" />
+</div>
+
 # 🔮 Tarot Card Reader
 
 [![Tests](https://github.com/veras-d/DevOpsProject/actions/workflows/test.yml/badge.svg)](https://github.com/veras-d/DevOpsProject/actions/workflows/test.yml)

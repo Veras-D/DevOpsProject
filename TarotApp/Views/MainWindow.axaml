@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
         x:Class="TarotApp.Views.MainWindow"
         x:DataType="vm:MainViewModel"
+        Icon="/public/icon.png"
         Title="Tarot Card Reader"
         Background="#1E1E1E"
         Foreground="White"
