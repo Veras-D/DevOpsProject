@@ -110,7 +110,7 @@ namespace TarotApp.Tests
             
             // Assert
             Assert.True(uniqueCards.Count >= 2, 
-                "DrawRandomCard deve retornar cartas diferentes quando chamado várias vezes");
+                "DrawRandomCard should return different letters when called multiple times");
         }
         
         [Fact]
