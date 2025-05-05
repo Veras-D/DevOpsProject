@@ -6,7 +6,9 @@
 
 A modern, cross-platform Tarot card application built with Avalonia UI and .NET 8, providing an intuitive interface for drawing and interpreting cards from the Major Arcana.
 
-![Tarot App Screenshot](https://i.imgur.com/zki0R5V.png "Tarot App Screenshot")
+<div align="center"">
+  <img src="https://i.imgur.com/zki0R5V.png"/>
+</div>
 
 ## ✨ Features
 
