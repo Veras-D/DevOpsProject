@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using System.IO;
 
 namespace TarotApp.Models
@@ -21,21 +22,28 @@ namespace TarotApp.Models
         {
             try
             {
-                return new Bitmap(ImagePath);
+                // Use AssetLoader to load resources from the assembly
+                var uri = new Uri($"avares://TarotApp/{ImagePath}");
+                using var stream = AssetLoader.Open(uri);
+                return new Bitmap(stream);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // If the card image cannot be loaded, try to load a default image
+                Console.WriteLine($"Error loading image {ImagePath}: {ex.Message}");
+                
+                // If that fails, try to load the back card image as fallback
                 try
                 {
-                    return new Bitmap("assets/verso.png");
+                    var uri = new Uri("avares://TarotApp/assets/verso.png");
+                    using var stream = AssetLoader.Open(uri);
+                    return new Bitmap(stream);
                 }
-                catch
+                catch (Exception innerEx)
                 {
+                    Console.WriteLine($"Error loading fallback image: {innerEx.Message}");
                     return null;
                 }
             }
         }
     }
 }
-
